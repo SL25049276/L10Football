@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   SectionList,
-  ScrollView,
   Image,
   StyleSheet,
   Alert,
@@ -51,8 +50,8 @@ const datasource = [
 ];
 
 const styles = StyleSheet.create({
-  screen: { backgroundColor: "#F4F6F8" },
-  container: { marginTop: 50, marginHorizontal: 12, marginBottom: 20 },
+  screen: { flex: 1, backgroundColor: "#F4F6F8" },
+  listContent: { paddingTop: 50, paddingHorizontal: 12, paddingBottom: 20 },
   banner: {
     backgroundColor: "#1B5E20",
     borderRadius: 14,
@@ -129,33 +128,34 @@ const renderItem = ({ item, section }) => (
 );
 
 const App = () => (
-    <ScrollView style={styles.screen}>
-      <View style={styles.container}>
-        <View style={styles.banner}>
-          <FontAwesome6 name="futbol" size={26} color="white" />
-          <Text style={styles.titleStyle}>Football Players</Text>
-        </View>
-
-        <SectionList
-            sections={datasource}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.key}
-            renderSectionHeader={({ section }) => (
-                <View
-                    style={[
-                      styles.headerStyle,
-                      { backgroundColor: section.backgroundColor, borderColor: section.color },
-                    ]}
-                >
-                  <FontAwesome6 name="shield-halved" size={18} color={section.color} />
-                  <Text style={[styles.headerText, { color: section.color }]}>
-                    {section.title}
-                  </Text>
-                </View>
-            )}
-        />
-      </View>
-    </ScrollView>
+    <View style={styles.screen}>
+      <SectionList
+          contentContainerStyle={styles.listContent}
+          sections={datasource}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          stickySectionHeadersEnabled={false}
+          ListHeaderComponent={
+            <View style={styles.banner}>
+              <FontAwesome6 name="futbol" size={26} color="white" />
+              <Text style={styles.titleStyle}>Football Players</Text>
+            </View>
+          }
+          renderSectionHeader={({ section }) => (
+              <View
+                  style={[
+                    styles.headerStyle,
+                    { backgroundColor: section.backgroundColor, borderColor: section.color },
+                  ]}
+              >
+                <FontAwesome6 name="shield-halved" size={18} color={section.color} />
+                <Text style={[styles.headerText, { color: section.color }]}>
+                  {section.title}
+                </Text>
+              </View>
+          )}
+      />
+    </View>
 );
 
 export default App;
